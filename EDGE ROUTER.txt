@@ -1,0 +1,39 @@
+EDGE ROUTER
+hostname Edge-Router
+
+interface GigabitEthernet0/0
+ description Link_to_MLS [cite: 75]
+ ip address 192.168.10.242 255.255.255.252 [cite: 76, 77]
+
+! DHCP Exclusions
+ip dhcp excluded-address 192.168.10.1 192.168.10.5
+ip dhcp excluded-address 192.168.10.129 192.168.10.133
+ip dhcp excluded-address 192.168.10.193 192.168.10.197
+ip dhcp excluded-address 192.168.10.225 192.168.10.229
+
+! DHCP Pools [cite: 8, 25, 42, 59]
+ip dhcp pool ENGINEERING_POOL
+ network 192.168.10.0 255.255.255.128
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+!
+ip dhcp pool MARKETING_POOL
+ network 192.168.10.128 255.255.255.192
+ default-router 192.168.10.129
+ dns-server 8.8.8.8
+!
+ip dhcp pool SALES_POOL
+ network 192.168.10.192 255.255.255.224
+ default-router 192.168.10.193
+ dns-server 8.8.8.8
+!
+ip dhcp pool HR_POOL
+ network 192.168.10.224 255.255.255.240
+ default-router 192.168.10.225
+ dns-server 8.8.8.8
+
+! Static Routes back to the MLS [cite: 17, 34, 51, 68]
+ip route 192.168.10.0 255.255.255.128 192.168.10.241 
+ip route 192.168.10.128 255.255.255.192 192.168.10.241 
+ip route 192.168.10.192 255.255.255.224 192.168.10.241 
+ip route 192.168.10.224 255.255.255.240 192.168.10.241
